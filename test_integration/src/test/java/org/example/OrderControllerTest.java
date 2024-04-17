@@ -1,9 +1,9 @@
 package org.example;
 import static org.mockito.Mockito.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -17,25 +17,39 @@ public class OrderControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        //comment faire l'injection a retenir
         orderController = new OrderController(mockOrderService);
     }
-
     @Test
-    public void testCreateOrder() {
-        // Créer un objet Order fictif pour le test
-        Order order = new Order(1,"hadoula",4);
+        public void testCreateOrder_Success() {
+
+            Order order = new Order(1,"hadil_benseid",12);
+            when(mockOrderService.createOrder(order)).thenReturn(true);
+            boolean result = orderController.createOrder(order);
+            verify(mockOrderService).createOrder(order);
+            assertTrue(result);
+        }
 
 
-        // Appeler la méthode à tester
-        orderController.createOrder(order);
-        // Vérifier que OrderService.createOrder a été appelé avec le bon argument (order)
-        verify(mockOrderService).createOrder(order);
+
+        @Test
+        public void testCreateOrder_Failure() {
+            Order order = new Order(1,"lina_benseid",8990);
+            when(mockOrderService.createOrder(order)).thenReturn(false);
+            boolean result = orderController.createOrder(order);
+            verify(mockOrderService).createOrder(order);
+            assertFalse(result);
+        }
+        @Test
+        public void testCreateOrder_FailureToSave() {
+            OrderService orderService = new OrderService(mockOrderDao);
+            Order order = new Order(1,"ilhem",85);
+            when(mockOrderDao.saveOrder(order)).thenReturn(false);
+
+            boolean result = orderService.createOrder(order);
+            verify(mockOrderDao).saveOrder(order);
+            assertFalse(result);
+        }
 
 
-        doNothing().when(mockOrderDao).saveOrder(order);
-
-        // Vérifier que OrderDao.saveOrder a été appelé avec l'objet de commande créé
-        verify(mockOrderDao).saveOrder(order);
     }
-}
+

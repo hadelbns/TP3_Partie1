@@ -9,9 +9,9 @@ public class OrderService {
     }
 
     // Méthode pour créer une commande
-    public void createOrder(Order order) {
+    public boolean createOrder(Order order) {
 
         // Enregistrer la commande en utilisant OrderDao
-        orderDao.saveOrder(order);
+        return orderDao.saveOrder(order);
     }
 }

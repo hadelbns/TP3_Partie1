@@ -8,7 +8,7 @@ public class OrderController {
     }
 
     // Méthode pour créer une commande à partir du contrôleur
-    public void createOrder(Order order) {
-        orderService.createOrder(order);
+    public boolean createOrder(Order order) {
+        return orderService.createOrder(order);
     }
 }
