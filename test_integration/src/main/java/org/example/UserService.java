@@ -12,8 +12,5 @@ public class UserService {
     public User getUserById(long id) {
         return userRepository.findUserById(id);
     }
-
-    // Autres méthodes du service utilisateur (si nécessaire)
-    // Par exemple, méthodes pour créer, mettre à jour ou supprimer un utilisateur
 }
 
